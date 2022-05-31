@@ -25,7 +25,8 @@ void setup() {
 int delayVal=1500;
 int ISOdelayVal=2000;
 char rx_byte = 0;
-double rate=625;// => 1500 1.5;//1000;//625 => 800 Hz; //Rates of 500, 625, 800 > modF -> modF of 1000, 800, 625
+//double rate=625;// => 1500 1.5;//1000;//625 => 800 Hz; //Rates of 500, 625, 800 > modF -> modF of 1000, 800, 625
+double rate = 625;
 int code1[14]={1,1,1,1,0,0,0,0,1,1,0,0,1,0};
 int code2[10]={1,0,0,0,1,1,1,0,0,1};
 int loopTime=10000;
