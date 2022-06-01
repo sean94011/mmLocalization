@@ -22,35 +22,38 @@ AccelStepper yStepper(AccelStepper::DRIVER, yPulPin, yDirPin);
 // Create a MultiStepper Group
 MultiStepper steppers;
 
-//Record coordinate
-long positions[2];
+// Record coordinate
+long positions[2] = {0,0};
+
+// Record Speed
+float speed = 0;
 
 void setup() {
     // Initialize the Serial Port
     Serial.begin(9600);
-
-    // Configure each stepper
-    xStepper.setMaxSpeed(1000);
-    yStepper.setMaxSpeed(1000);
 
     // Add the two steppers to the MultiStpper Group to manage
     steppers.addStepper(xStepper);
     steppers.addStepper(yStepper);
 
     Serial.println("------------------------------------------");
-    Serial.println("Enter the 2D Position in [mm]");
+    Serial.println("Enter 'speed, x, y' [mm/s,mm,mm]");
     Serial.println("------------------------------------------");
-
 }
 
 void loop() {
   while (Serial.available() > 0) {
     // Parse the user input coordinate
-    positions[0] = Serial.parseFloat();
-    positions[1] = Serial.parseFloat();
+    speed = Serial.parseFloat();
+    positions[0] = round(Serial.parseFloat());
+    positions[1] = round(Serial.parseFloat());
 
     // Print the User Input
     printPosition(positions[0], positions[1]);
+
+    // Configure each stepper
+    xStepper.setMaxSpeed(round(speed));
+    yStepper.setMaxSpeed(round(speed));
 
     // Set the destinations for the steppers
     positions[0] *= -1;
