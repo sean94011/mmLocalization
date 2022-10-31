@@ -14,8 +14,8 @@ inline void printPosition(int x, int y) {
 // Initialize the two steppers
 const int xPulPin = 6;
 const int xDirPin = 7;
-const int yPulPin = 8;
-const int yDirPin = 9;
+const int yPulPin = 4;
+const int yDirPin = 5;
 AccelStepper xStepper(AccelStepper::DRIVER, xPulPin, xDirPin);
 AccelStepper yStepper(AccelStepper::DRIVER, yPulPin, yDirPin);
 

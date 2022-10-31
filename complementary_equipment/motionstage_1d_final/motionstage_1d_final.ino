@@ -7,7 +7,7 @@
 // Output: N/A
 inline void printPosition(int t, int x, int y) {
     char msg[20];
-    sprintf(msg, "time = %d, (x, y) = (%d,%d)", t, x, y/160);
+    sprintf(msg, "time = %d, (x, y) = (%d,%d)", t, x, y);
     Serial.println(msg);
 }
 
@@ -27,6 +27,7 @@ long positions[2] = {0,0};
 
 // Record Speed & Time
 float speed = 0;
+float mmspeed = 0;
 float time = 0;
 float curx = 0;
 float cury = 0;
@@ -39,34 +40,42 @@ void setup() {
     steppers.addStepper(yStepper);
 
     Serial.println("------------------------------------------");
-    Serial.println("Enter 'time, displacement' [sec,mm]");
+    Serial.println("Enter 'displacement' [mm]");
     Serial.println("------------------------------------------");
 }
 
 void loop() {
   while (Serial.available() > 0) {
+    Serial.println(cury);
     // Parse the user input coordinate
-    time = Serial.parseFloat();
+    // time = Serial.parseFloat();
     
     // positions[0] = round(Serial.parseFloat()*160);
     positions[0] = 0;
-    positions[1] = round(Serial.parseFloat()*160.0);
+    positions[1] = round(Serial.parseFloat());
 
     // Check the maximum distance
-    int maxDist = max(abs(positions[0] - curx),abs(positions[1] - cury));
+    int maxDist = abs(positions[1] - cury);
 
     // Compute the velocity by the designated time duration
-    speed = maxDist / time;
-    curx = positions[0];
+    mmspeed = 2;//80;
+    time = maxDist / mmspeed;
+    speed = positions[1]*160 / time;
+    Serial.println(speed);
+    // curx = positions[0];
     cury = positions[1];
     // Print the User Input
     printPosition(time, positions[0], positions[1]);
+    positions[1] = positions[1]*160;
 
     // Configure each stepper
     xStepper.setMaxSpeed(round(speed));
     yStepper.setMaxSpeed(round(speed));
     // Set the destinations for the steppers
-    positions[0] *= -1; //change to pos if want to reverse xy directions
+    // positions[0] *= -1; //change to pos if want to reverse xy directions
+    for(int i = 0; i < 2; i++){
+      Serial.println(positions[i]);
+    }
     steppers.moveTo(positions);
     // Blocks until all are in position
     steppers.runSpeedToPosition();
