@@ -28,7 +28,7 @@ const int ISOdelayVal = 2000;
 
 char rx_byte = 0;
 const long rate = 625; // in microseconds
-const int duty = 75; // duty cycle for in-chirp modulation
+const int duty = 50; // duty cycle for in-chirp modulation
 
 int code1[14] = {1,1,1,1,0,0,0,0,1,1,0,0,1,0};
 int code2[10] = {1,0,0,0,1,1,1,0,0,1};

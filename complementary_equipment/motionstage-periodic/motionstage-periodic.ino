@@ -60,7 +60,7 @@ void loop() {
     // Compute the velocity by the designated time duration
     mmspeed = 2;//80;
     time = maxDist / mmspeed;
-    speed = positions[1]*160 / time;
+    speed = maxDist*160 / time;
     Serial.println(speed);
     // curx = positions[0];
     cury = positions[1];
@@ -72,7 +72,7 @@ void loop() {
     xStepper.setMaxSpeed(round(speed));
     yStepper.setMaxSpeed(round(speed));
     // Set the destinations for the steppers
-    // positions[0] *= -1; //change to pos if want to reverse xy directions
+    // positions[0] *= -1; // change to pos if want to reverse xy directions
     for(int i = 0; i < 2; i++){
       Serial.println(positions[i]);
     }
